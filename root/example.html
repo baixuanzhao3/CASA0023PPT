@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Presentation on Weather RADAR</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Baixuan Zhao" />
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Presentation on Weather RADAR
+]
+.author[
+### Baixuan Zhao
+]
+.institute[
+### RStudio, PBC
+]
+.date[
+### 2023/01/20
+]
+
+---
+
+# Introduction to Weather RADAR
+
+--
+
+Weather radar, also called weather surveillance radar (WSR) and Doppler weather radar, is a type of radar used to locate precipitation, calculate its motion, and estimate its type (rain, snow, hail etc.). Modern weather radars are mostly pulse-Doppler radars, capable of detecting the motion of rain droplets in addition to the intensity of the precipitation. Both types of data can be analyzed to determine the structure of storms and their potential to cause severe weather.
+
+--
+
+During World War II, radar was used to filter extreme weathers that affected victory.Soon after the war, surplus radars were used to detect precipitation. Since then, weather radar has evolved on its own and is now used by national weather services, research departments in universities, and in television stations' weather departments. Raw images are routinely used and specialized software can take radar data to make short term forecasts of future positions and intensities of rain, snow, hail, and other weather phenomena. Radar output is even incorporated into numerical weather prediction models to improve analyses and forecasts.
+
+---
+# Mechanism of Weather RADAR I
+
+--
+
+\1. Sending radar pulses
+  
+--
+  
+Weather radars send directional pulses of microwave radiation, on the order of a microsecond long, using a cavity magnetron or Klystron tube connected by a wave-guide to a parabolic antenna. 
+
+--
+
+\2. Listening for return signals
+
+--
+
+Between each pulse, the radar station serves as a receiver as it listens for return signals from particles in the air. The length of this phase is determined by the need for the microwave radiation (which travels at the speed of light) to propagate from the detector to the weather target and back again, a distance which could be several hundred kilometers. The horizontal distance from station to target is calculated simply from the amount of time that elapses from the initiation of the pulse to the detection of the return signal. The time is converted into distance by multiplying by the speed of light in air:
+`$$d = \frac{c\Delta t}{2n}$$`
+where c = 299,792.458 km/s is the speed of light, and n ≈ 1.0003 is the refractive index of air.
+
+---
+# Mechanism of Weather RADAR II
+--
+
+\3. Determining height 
+  
+--
+
+Since the Earth is round, the radar beam in vacuum would rise according to the reverse curvature of the Earth. However, the atmosphere has a refractive index that diminishes with height, due to its diminishing density. This bends the radar beam slightly toward the ground and with a standard atmosphere this is equivalent to considering that the curvature of the beam is 4/3 the actual curvature of the Earth. Depending on the elevation angle of the antenna and other considerations, the following formula may be used to calculate the target's height above ground:
+
+--
+
+`$$H = \sqrt{r^{2}+\frac {16}{9}a^{2}+\frac {8}{3}ra\sin(\theta)}-\frac {4}{3}a+h$$`where: r = distance radar–target,a = Earth radius,θ = elevation angle above the radar horizon,h = height of the feedhorn above ground.
+
+---
+#Mechanism of Weather RADAR III
+&lt;center class="half"&gt;
+Figure 1.NEXRAD in South Dakota with a supercell in the background&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Wea01195_-_Flickr_-_NOAA_Photo_Library.jpg/440px-Wea01195_-_Flickr_-_NOAA_Photo_Library.jpg" width=200 height=200/&gt;
+&lt;/center&gt;
+&lt;center class="half"&gt;
+Figure 2. A radar beam spreads out   Figure 3. The radar beam path with height
+&lt;/center&gt;
+&lt;figure&gt;
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Radar-beam.svg/560px-Radar-beam.svg.png" width=300/&gt;
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Radar-hauteur-en.svg/660px-Radar-hauteur-en.svg.png" width=300/&gt;
+&lt;/figure&gt;
+
+---
+#Application of Weather RADAR I: Rainfall Estimation-Data Resolution
+Weather RADAR can generate precipitation data.Accurate rain fall estimation needs precipitation data with high temporal and spatial resolutions, which is met by weather RADAR precipitation data. The spatial and temporal resolutions of weather RADAR precipitation data is 0.5-2 km and 5-15 min respectively.
+
+Table 1. Resolutions of Rainfall Data from Different Devices
+&lt;center class="half"&gt;
+&lt;figure&gt;
+&lt;img src="https://i.postimg.cc/FsRRdKr3/radar4.png" width=600 height=200/&gt;
+&lt;/center&gt;
+
+---
+#Application of Weather RADAR II: Rainfall Estimation-Mechanism
+A weather radar transmits electromagnetic waves and measures the energy backscattered by the hydrometeors in the atmosphere, i.e., the radar reflectivity in 3D. Ground-based weather radars work mainly in three frequency bands: S(2.7–2.9 GHz) , C (5.6–5.65 GHz), and X (9.3–9.5 GHz),used for  rain at very long ranges, rain at intermediate ranges and small ranges.
+
+--
+
+The radar reflectivity (Z) can be converted to precipitation estimation products including precipitation intensity (R)and precipitation accumulation by RADAR softwares. Various empirical relationships, often called Z–R equations, are used in the conversion of Z into R.
+
+`$$R[mm\cdot h^{-1}]= (\frac {10^{\frac {Z[dBZ]}{10}}}{a})^{\frac {1}{b}}$$`
+where the a and b are constants that are experimentally determined
+
+---
+#Application of Weather RADAR III: Rainfall Estimation-Weather Radar Composites I
+Weather radar networks offer the possibility to cover a larger domain than a single instrument. In addition, networks allow for the improving of data quality of individual weather radars. As a result, it is possible to generate composites from the individual radar imagery.Data from different RADARS are merged with skilled merging method.A skilled merging uses a criterion of highest quality or weighted average quality for selecting data from individual radars. Different quality factors can be applied for this purpose. Among these, the distance from the radar site or the height of the radar beam over the ground are widely used [64]. The general formula on the precipitation intensity (R) is expressed as:
+
+`$$\frac {\sum_{i=1}^n w_iR_i}{\sum_{i=1}^n w_i}$$`
+where Ri is the single radar reflectivity,wi is the weight of the i–th radar,usually determined by quality index-based method, i is the radar number, and n is the number of radars covering a given pixel.
+
+---
+#Application of Weather RADAR IV: Rainfall Estimation-Weather Radar Composites II
+
+Apart from quality-index-based method, which is the best one, the weights of rainfall data from individual RADARs can also be determined from the maximum value method and the nearest radar value (minimum distance to the radar) method.
+
+Figure 4. RMSE of Precipitation from  RADAR Composites Based On Three Weight Determination Method: 1: Maximum Value Method 2:Nearest radar value
+3:quality-Index-Based Method
+&lt;center class="half"&gt;
+&lt;figure&gt;
+&lt;img src="https://i.postimg.cc/VL2xQXR7/radar5.png" width=300 height=250/&gt;
+&lt;/center&gt;
+
+---
+#Reflection
+
+--
+
+Weather RADARs can measure hydrological and meteorological data based on measurement of reflectivity and conversion from reflectivity to the interested data.
+
+--
+
+In terms of precipitation estimation, they have the advantage in temporal and spatial resolutions in the data. Weather RADAR can function individually as composite to measure rainfall data. Based on different methods of merging data and determinining weights of different measured data, different results of rainfall estimation can be obtained.
+In the future, the data from weather RADARs can be applied as input of more sophisticated hydrologic and meteorologic models while the data can be assimilated to predict the rainfall at ungauged areas.
+
+---
+#Reference
+Wikipedia. ''Weather RADAR.''https://en.wikipedia.org/wiki/Weather_radar
+
+Sokol Z, Szturc J, Orellana-Alvear J, Popová J, Jurczyk A, Célleri R. The Role of Weather Radar in Rainfall Estimation and Its Application in Meteorological and Hydrological Modelling—A Review. Remote Sensing. 2021; 13(3):351. https://doi.org/10.3390/rs13030351
+
+---
+
+class: center, middle
+
+# Thanks!
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
